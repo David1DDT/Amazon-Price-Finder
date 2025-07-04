@@ -8,15 +8,15 @@ response = requests.get("https://www.amazon.com/dp/B075CYMYK6?ref_=cm_sw_r_cp_ud
 html_code = response.text
 
 soup = BeautifulSoup(html_code, "html.parser")
-price = int(soup.find("span", class_="a-price-whole").getText().replace(".", "")) # type: ignore
+price = int(soup.find("span", class_="a-price-whole").getText().replace(".", ""))
 
 if price > 100:
     smtp = smtplib.SMTP("smtp.gmail.com", port=587)
     smtp.starttls()
-    smtp.login(user=os.getenv("EMAIL"), password=password) #type: ignore
+    smtp.login(user=os.getenv("EMAIL"), password=password)
 
     smtp.sendmail(
-            from_addr=os.getenv("EMAIL"), # type: ignore
-            to_addrs=os.getenv("EMAIL"), # type: ignore
+            from_addr=os.getenv("EMAIL"),
+            to_addrs=os.getenv("EMAIL"),
             msg=f"Subject:Price alert \n\n the pressure cooker is below 100"
             )
